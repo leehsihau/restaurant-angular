@@ -13,6 +13,7 @@ import { MatButtonModule } from '@angular/material/button';
 
 import { DishService } from './services/dish.service';
 import {PromotionService} from './services/promotion.service';
+import {LeaderService} from './services/leader.service';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
@@ -50,7 +51,8 @@ import { ContactComponent } from './contact/contact.component';
   ],
   providers: [
     DishService,
-    PromotionService
+    PromotionService,
+    LeaderService
   ],
   bootstrap: [AppComponent]
 })
