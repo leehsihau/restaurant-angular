@@ -82,7 +82,7 @@ export class DishdetailComponent implements OnInit {
     }
     console.log(this.comment);
     this.dish.comments?.push(commentplc);
-    this.commentForm.reset();
+    this.commentForm.reset({rating: 5});
   }
 
   checkErrorBeforeSubmit(){
