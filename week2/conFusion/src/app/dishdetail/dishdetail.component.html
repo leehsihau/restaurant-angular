@@ -25,6 +25,12 @@
 
     <div fxFlex="40" *ngIf="dish">
         <mat-list role="list">
+            <mat-list-item *ngIf="displayPlaceholders()" role="listitem">
+                <p>{{commentMsgPlaceholder}}<br>
+                    {{ratingPlaceholder}} star<br>
+                    --{{namePlaceholder}}<br>
+                </p>  
+            </mat-list-item>
             <mat-list-item *ngFor="let comment of dish.comments" role="listitem">
                 <p>{{comment.comment}}<br>
                     {{comment.rating}} star<br>
@@ -32,6 +38,29 @@
                 </p>
             </mat-list-item>
         </mat-list>
+        <div>
+            <form novalidate [formGroup]="commentForm" style="margin-bottom: 140px !important;" (ngSubmit)="onSubmit()">
+                <p>
+                  <mat-form-field appearance="outline" fxFlex="60">
+                    <input matInput  [(ngModel)]="namePlaceholder" name="namePlaceholder" formControlName="name" placeholder="Name" type="text" required>
+                    <mat-error *ngIf="formErrors.name">{{formErrors.name}}</mat-error>
+                  </mat-form-field>
+                </p>
+                <table class="form-size">
+                  <td>
+                      <p>Rating<br></p>
+                    <mat-slider [(ngModel)]="ratingPlaceholder" name="ratingPlaceholder" formControlName="rating" thumbLabel min="1" max="4" step="1" value="2"></mat-slider>
+                </td>
+                </table>
+                <p>
+                  <mat-form-field  appearance="outline" fxFlex="60" class="full-width">
+                    <textarea [(ngModel)]="commentMsgPlaceholder" name="commentMsgPlaceholder" matInput formControlName="commentMsg" placeholder="Your Comment" rows="12">
+                    </textarea>
+                  </mat-form-field>
+                </p>
+                <button [disabled]="commentForm.invalid" type="submit" mat-button>Submit</button>
+              </form>
+        </div>
     </div>
 
 </div>
