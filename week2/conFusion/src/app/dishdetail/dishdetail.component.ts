@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import {Params, ActivatedRoute } from '@angular/router';
 import {Location} from '@angular/common';
 import { Dish } from '../shared/dish';
@@ -24,7 +24,7 @@ export class DishdetailComponent implements OnInit {
   ratingPlaceholder!: number;
 
 
-  constructor(private dishService: DishService, private routeService: ActivatedRoute, private location: Location, private fb: FormBuilder) {
+  constructor(private dishService: DishService, private routeService: ActivatedRoute, private location: Location, private fb: FormBuilder, @Inject('BaseURL') public BaseURL: string) {
     this.createForm();
    }
 
@@ -68,7 +68,9 @@ export class DishdetailComponent implements OnInit {
   }
 
   goBack(): void{
-    this.location.back();
+    //this.location.back();
+    window.location.href='http://localhost:4200/menu';
+
   }
 
   onSubmit() {

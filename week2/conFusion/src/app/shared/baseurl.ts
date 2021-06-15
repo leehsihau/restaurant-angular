@@ -1,0 +1,1 @@
+export const baseURL = 'http://localho.st:3000/'

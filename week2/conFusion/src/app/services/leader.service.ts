@@ -1,4 +1,8 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { baseURL } from '../shared/baseurl';
 import {Leader} from '../shared/leader';
 import {LEADERS} from '../shared/leaders';
 
@@ -7,16 +11,17 @@ import {LEADERS} from '../shared/leaders';
 })
 export class LeaderService {
 
-  constructor() { }
-  getLeaders(): Promise<Leader[]> {
-    return new Promise(resolve=>{setTimeout(()=>(resolve(LEADERS)), 2000)})
+  constructor(private http: HttpClient) { }
+  getLeaders(): Observable<Leader[]> {
+    return this.http.get<Leader[]>(baseURL+'leadership');
   }
 
-  getLeader(id: string): Promise<Leader> {
-    return new Promise(resolve=>{setTimeout(()=>(resolve(LEADERS.filter((leader)=>leader.featured)[0])), 2000)});
+  getLeader(id: string): Observable<Leader> {
+    return this.http.get<Leader>(baseURL+'leadership/'+id);
   }
 
-  getFeaturedLeader(): Promise<Leader> {
-    return new Promise(resolve=>{setTimeout(()=>(resolve(LEADERS.filter((leader)=>(leader.featured))[0])), 2000)});
+  getFeaturedLeader(): Observable<Leader> {
+    return this.http.get<Leader[]>(baseURL + 'leadership?featured=true').pipe(map(leaders => leaders[0]));
+
   }
 }
