@@ -14,6 +14,7 @@ export class ContactComponent implements OnInit {
   contactType = ContactType;
   constructor(private fb: FormBuilder) {
     this.createForm();
+    
    }
    formErrors: {[index: string]:any} = {
     'firstname': '',
