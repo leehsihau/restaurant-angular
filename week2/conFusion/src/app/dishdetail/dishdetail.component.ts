@@ -7,10 +7,21 @@ import { switchMap } from 'rxjs/operators';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Comment } from '../shared/comment';
 
+import { expand, flyInOut, visibility } from '../animations/app.animation';
+
 @Component({
   selector: 'app-dishdetail',
   templateUrl: './dishdetail.component.html',
-  styleUrls: ['./dishdetail.component.scss']
+  styleUrls: ['./dishdetail.component.scss'],
+  host: {
+    '[@flyInOut]': 'true',
+    'style': 'display: block;'
+    },
+    animations: [
+      visibility(),
+      flyInOut(),
+      expand()
+    ]
 })
 export class DishdetailComponent implements OnInit {
   dish!: Dish;
@@ -24,6 +35,7 @@ export class DishdetailComponent implements OnInit {
   ratingPlaceholder!: number;
   errMsg!: string;
   dishcopy!: Dish;
+  visibility = 'shown';
 
   constructor(private dishService: DishService, private routeService: ActivatedRoute, private location: Location, private fb: FormBuilder, @Inject('BaseURL') public BaseURL: string) {
     this.createForm();
@@ -58,8 +70,8 @@ export class DishdetailComponent implements OnInit {
    }
   ngOnInit() {
     this.dishService.getDishIds().subscribe(dishIds => this.dishIds = dishIds);
-    this.routeService.params.pipe(switchMap((params: Params) => this.dishService.getDish(params['id'])))
-    .subscribe(dish => { this.dish = dish; this.dishcopy=dish; this.setPrevNext(dish.id); }, errMsg=>this.errMsg=<any>errMsg);
+    this.routeService.params.pipe(switchMap((params: Params) => {this.visibility='hidden'; return this.dishService.getDish(params['id'])}))
+    .subscribe(dish => { this.dish = dish; this.dishcopy=dish; this.setPrevNext(dish.id); this.visibility='shown' }, errMsg=>this.errMsg=<any>errMsg);
   }
 
   setPrevNext(dishId: string) {

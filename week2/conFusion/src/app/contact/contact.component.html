@@ -35,7 +35,7 @@
       </div>
     </div>
   </div>
-  <div fxFlex fxFlexOffset="20px" class="form-size">
+  <div fxFlex fxFlexOffset="20px" class="form-size" *ngIf="!isInProcess && !isSuccessFromServer" [@expand]>
     <h3>Send us your feedback</h3>
     <form novalidate [formGroup]="feedbackForm" (ngSubmit)="onSubmit()">
       <p>
@@ -76,7 +76,25 @@
           </textarea>
         </mat-form-field>
       </p>
-      <button type="submit" mat-button>Submit</button>
+      <button [disabled]="feedbackForm.invalid" type="submit" mat-button>Submit</button>
     </form>
   </div>
+  <div fxFlex [hidden]="!isInProcess">
+    <mat-spinner></mat-spinner> <h4>Loading . . .</h4>
+</div>
+<div fxFlex *ngIf="isSuccessFromServer" [@expand]>
+  <p>
+    <br>
+    <b>Your submission</b><br>
+    First Name: {{displayFeedback.firstname}}<br />
+    Last Name: {{displayFeedback.lastname}}<br>
+    telnum: {{displayFeedback.telnum}}<br>
+    email: {{displayFeedback.email}}<br>
+    Contact You ?: {{displayFeedback.agree}}<br>
+    Contact Type: {{displayFeedback.contactType}}<br>
+    Message: {{displayFeedback.message}}<br>
+
+
+  </p>
+</div>
 </div>

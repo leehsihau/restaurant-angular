@@ -1,7 +1,7 @@
 <div *ngIf="dish!=undefined" class="container" fxLayout="row" fxLayout.sm="column" fxLayout.xs="column"
     fxLayoutAlign.gt-md="space-around center" fxLayoutGap="10px" fxLayoutGap.xs="0">
 
-    <div fxFlex="40" *ngIf="dish">
+    <div fxFlex="40" *ngIf="dish" [@visibility]="visibility">
         <mat-card>
             <img height="200px" src="{{BaseURL+dish.image}}" alt="{{dish.name}}">
             <mat-card-content>
@@ -23,7 +23,7 @@
         </mat-card>
     </div>
 
-    <div fxFlex="40" *ngIf="dish">
+    <div fxFlex="40" *ngIf="dish"  [@visibility]="visibility" [@expand]>
         <mat-list role="list">
             <mat-list-item *ngIf="displayPlaceholders()" role="listitem">
                 <p>{{commentMsgPlaceholder}}<br>
@@ -31,7 +31,7 @@
                     --{{namePlaceholder}}<br>
                 </p>  
             </mat-list-item>
-            <mat-list-item *ngFor="let comment of dish.comments" role="listitem">
+            <mat-list-item *ngFor="let comment of dish.comments" role="listitem" [@expand]>
                 <p>{{comment.comment}}<br>
                     {{comment.rating}} star<br>
                     --{{comment.author}} {{comment.date | date}}<br>
